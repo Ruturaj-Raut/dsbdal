@@ -1,0 +1,50 @@
+import nltk
+
+nltk.download('punkt')
+nltk.download('wordnet')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('stopwords')
+from nltk import sent_tokenize
+from nltk import word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
+from nltk.stem.snowball import SnowballStemmer
+from nltk.stem import LancasterStemmer
+from nltk.stem import WordNetLemmatizer
+
+lemma = WordNetLemmatizer()
+
+text = 'Real madrid is set to win the UCL for the season . Benzema might win Balon dor . Salah might be the runner up'
+tokens_sent = nltk.sent_tokenize(text)
+print(tokens_sent)
+tokens_words = nltk.word_tokenize(text)
+print(tokens_words)
+
+stem = []
+for i in tokens_words:
+    ps = PorterStemmer()
+    stem_word = ps.stem(i)
+    stem.append(stem_word)
+print(stem)
+
+print("\nLemmatization")
+
+lem = WordNetLemmatizer()
+lemma_output = ' '.join([lem.lemmatize(w) for w in stem])
+print(lemma_output)
+leme = []
+for i in stem:
+    lem_word = lem.lemmatize(i)
+    leme.append(lem_word)
+print(leme)
+
+print("\nParts of Speech")
+print("Parts of Speech: ", nltk.pos_tag(leme))
+
+print("\nStopword")
+sw_nltk = stopwords.words('english')
+print(sw_nltk)
+print(" ")
+words = [word for word in text.split() if word.lower() not in sw_nltk]
+new_text = " ".join(words)
+print(new_text)

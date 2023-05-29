@@ -1,0 +1,88 @@
+# seaborn All operation
+
+import seaborn as sns
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("C:\\Users\\Ruturaj\\OneDrive\\Desktop\\dsbdal\\train.csv", delimiter=',', quotechar='"')
+print(df)
+
+# Distribution plot
+sns.displot(x=df['Age'])
+sns.displot(x=df['Survived'], bins=5)
+sns.displot(x=df['Sex'])
+plt.show()
+
+plt.hist(x=df['Age'], bins=5, histtype='step', align='right', orientation='vertical')
+plt.title("Age")
+plt.show()
+
+plt.hist(x=df['Survived'], bins=5, histtype='step', align='right', orientation='horizontal')
+plt.title("Survived")
+plt.show()
+
+plt.hist(x=df['Sex'], bins=5, histtype='stepfilled', align='left', color='blue')
+plt.title("Sex")
+plt.show()
+
+print("joint plot")
+sns.jointplot(x=df['Age'], y=df['Survived'], kind='scatter')
+sns.jointplot(x=df['Survived'], y=df['Age'], kind='hex')
+plt.show()
+
+print("pair plot")
+sns.rugplot(x=df['Fare'])
+plt.show()
+
+print("Bar plot")
+sns.barplot(x=df['Survived'], y=df['Age'])
+plt.show()
+sns.barplot(x=df['Survived'], y=df['Age'], orient='h')
+plt.show()
+
+print("Count plot")
+sns.countplot(df['Age'])
+sns.set_theme(style='darkgrid')
+plt.show()
+
+print("Box plot")
+sns.boxplot(y=df['Age'], x=df['Survived'])
+plt.show()
+
+print("violin plot")
+sns.violinplot(y=df['Age'], x=df['Survived'], data=df, hue="Survived", orientation='right')
+plt.show()
+
+print("strip plot")
+sns.stripplot(x=df['Age'], y=df['Sex'], data=df, jitter=True)
+plt.show()
+
+# In[43]:
+print("swarm-plot")
+sns.swarmplot(x=df['Sex'], y=df['Age'])
+plt.show()
+
+# In[45]:
+print("heat map")
+df["Age"] = df["Age"].fillna(df["Age"].mean())
+df["Cabin"] = df["Cabin"].fillna(df["Cabin"].mode()[0])
+df["Embarked"] = df["Embarked"].fillna(df["Embarked"].mode()[0])
+df["Sex"] = [1 if i == "male" else 0 for i in df["Sex"]]
+df["Embarked"] = [0 if i == "S" else i for i in df["Embarked"]]
+df["Embarked"] = [1 if i == "C" else i for i in df["Embarked"]]
+df["Embarked"] = [2 if i == "Q" else i for i in df["Embarked"]]
+cols = ["Survived", "Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked"]
+train_corr = df[cols].corr()
+print(train_corr)
+sns.heatmap(train_corr)
+plt.show()
+
+# In[ ]:
+array_2d = np.linspace(1, 5, 12).reshape(4, 3)
+print(array_2d)
+
+# Seaborn heat map using numpy 2d array
+# In[47]:
+sns.heatmap(array_2d)
+plt.show()

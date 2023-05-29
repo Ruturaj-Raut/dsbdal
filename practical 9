@@ -1,0 +1,9 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+data = pd.read_csv("train.csv")
+sns.boxplot(x=data['Sex'], y=data["Age"])
+sns.boxplot(x=data['Sex'], y=data["Age"], data=data["Survived"])
+plt.show()
